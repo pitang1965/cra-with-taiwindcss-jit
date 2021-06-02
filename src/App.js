@@ -1,24 +1,104 @@
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './styles/output.css'
+import { Switch } from '@headlessui/react';
 
 function App() {
+  const [useTailwind, setUseTaiwind] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Switch.Group>
+        <div className='flex items-center'>
+          <Switch.Label passive className='m-2'>
+            Tailwind CSS (JITモード) を使用する
+          </Switch.Label>
+          <Switch
+            checked={useTailwind}
+            onChange={setUseTaiwind}
+            className={`${
+              useTailwind ? 'bg-green-500' : 'bg-gray-500'
+            } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none m-2`}
+          >
+            <span
+              className={`${
+                useTailwind ? 'translate-x-6' : 'translate-x-1'
+              } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+            />
+          </Switch>
+        </div>
+      </Switch.Group>
+
+      {useTailwind ? (
+        // Tailswind CSS (src\styles\output.css 及び tailwind.config.js)を使用
+        <div className='text-center'>
+          <header
+            className='flex flex-col items-center justify-center min-h-screen text-white bg-cra'
+            style={{ fontSize: 'calc(10px + 2vmin)' }}
+          >
+            <img
+              src={logo}
+              className='pointer-events-none animate-spinSlow'
+              style={{ height: '40vmin' }}
+              alt='logo'
+            />
+            <p>
+              <code>src\styles\output.css</code> 及び{' '}
+              <code>tailwind.config.js</code> を使用
+            </p>
+            <a
+              className='text-reactBlue'
+              href='https://reactjs.org'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Tailwind CSS (JITモード) を使用しています
+            </a>
+            <p>
+              ソースコードは
+              <a
+                className='text-reactBlue'
+                href='https://github.com/pitang1965/cra-with-taiwindcss-jit'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                こちら
+              </a>
+            </p>
+          </header>
+        </div>
+      ) : (
+        // src\App.css を使用
+        <div className='App'>
+          <header className='App-header'>
+            <img src={logo} className='App-logo' alt='logo' />
+            <p>
+              <code>src\App.css</code> を使用
+            </p>
+            <a
+              className='App-link'
+              href='https://reactjs.org'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Tailwind CSSを使用していません
+            </a>
+            <p>
+              ソースコードは
+              <a
+                className='text-reactBlue'
+                href='https://github.com/pitang1965/cra-with-taiwindcss'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                こちら
+              </a>
+            </p>
+          </header>
+        </div>
+      )}
+    </>
   );
 }
 
